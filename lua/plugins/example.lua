@@ -1,6 +1,24 @@
 -- since this is just an example spec, don't actually load anything here and return an empty spec
--- stylua: ignore
-if true then return {} end
+-- Initialize an empty configuration table
+local config = {}
+
+-- Check if nvim-treesitter is available
+local has_treesitter, treesitter = pcall(require, "nvim-treesitter")
+if has_treesitter then
+  -- Add the configuration for the asm parser
+  require("nvim-treesitter.parsers").get_parser_configs().asm = {
+    install_info = {
+      url = "https://github.com/rush-rs/tree-sitter-asm.git",
+      files = { "src/parser.c" },
+      branch = "main",
+    },
+  }
+end
+
+-- Return the final configuration
+do
+  return config
+end
 
 -- every spec file under the "plugins" directory will be loaded automatically by lazy.nvim
 --
